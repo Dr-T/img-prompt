@@ -27,20 +27,20 @@ export function Navigation() {
       <Col flex="auto">
         <Menu onClick={onClick} selectedKeys={[current]} mode="horizontal" items={MENU_ITEMS} />
       </Col>
-      <Col>
-        <Space>
-          {screens.md && (
-            <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
-              <img src={DISCORD_BADGE_SRC} alt="chat on Discord" style={{ height: "24px" }} />
-            </a>
-          )}
-          {screens.md && (
-            <a href={GITHUB_LINK} target="_blank" rel="noopener noreferrer">
-              <GithubOutlined style={{ color: "black", fontSize: "24px", padding: "4px" }} />
-            </a>
-          )}
-        </Space>
-      </Col>
+//       <Col>
+//         <Space>
+//           {screens.md && (
+//             <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
+//               <img src={DISCORD_BADGE_SRC} alt="chat on Discord" style={{ height: "24px" }} />
+//             </a>
+//           )}
+//           {screens.md && (
+//             <a href={GITHUB_LINK} target="_blank" rel="noopener noreferrer">
+//               <GithubOutlined style={{ color: "black", fontSize: "24px", padding: "4px" }} />
+//             </a>
+//           )}
+//         </Space>
+//       </Col>
     </Row>
   );
 }
