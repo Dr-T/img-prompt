@@ -4,7 +4,8 @@ import React, { useState, useEffect } from "react";
 import { Menu, Row, Col, Space, Grid } from "antd";
 import { usePathname } from "next/navigation";
 import { GithubOutlined } from "@ant-design/icons";
-import { MENU_ITEMS, DISCORD_LINK, GITHUB_LINK, DISCORD_BADGE_SRC } from "./data";
+import { MENU_ITEMS } from "./data";
+// import { MENU_ITEMS, DISCORD_LINK, GITHUB_LINK, DISCORD_BADGE_SRC } from "./data";
 
 const { useBreakpoint } = Grid;
 
