@@ -25,9 +25,9 @@ const LANGUAGES = [
   { key: "bn", label: "বাংলা" },
 ];
 
-const GITHUB_LINK = "https://github.com/rockbenben/img-prompt";
-const DISCORD_LINK = "https://discord.gg/PZTQfJ4GjX";
-const DISCORD_BADGE_SRC = "https://img.shields.io/discord/1048780149899939881?color=%2385c8c8&label=Discord&logo=discord&style=for-the-badge";
+// const GITHUB_LINK = "https://github.com/Dr-T/img-prompt";
+// const DISCORD_LINK = "https://discord.gg/PZTQfJ4GjX";
+// const DISCORD_BADGE_SRC = "https://img.shields.io/discord/1048780149899939881?color=%2385c8c8&label=Discord&logo=discord&style=for-the-badge";
 
 export function Navigation() {
   const MENU_ITEMS = useContext(DataContext);
