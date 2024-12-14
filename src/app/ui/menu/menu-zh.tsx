@@ -12,17 +12,8 @@ export const MENU_ITEMS = [
   },
   {
     label: (
-      <a href="https://newzone.top/posts/2022-09-05-stable_diffusion_ai_painting.html" target="_blank" rel="noopener noreferrer">
-        Stable Diffusion 入门教程
-      </a>
-    ),
-    key: "LearnData",
-    icon: <ThunderboltOutlined />,
-  },
-  {
-    label: (
-      <a href="https://www.aishort.top/" target="_blank" rel="noopener noreferrer">
-        ChatGPT Shortcut
+      <a href="https://prompt.tx88.eu.org/" target="_blank" rel="noopener noreferrer">
+        ChatGPT 提示词
       </a>
     ),
     key: "aishort",
@@ -36,5 +27,14 @@ export const MENU_ITEMS = [
     ),
     key: "Tools",
     icon: <ToolOutlined />,
+  },
+  {
+    label: (
+      <a href="https://lobechat.tx88.eu.org/" target="_blank" rel="noopener noreferrer">
+        免费AI会话
+      </a>
+    ),
+    key: "LearnData",
+    icon: <ThunderboltOutlined />,
   },
 ];
