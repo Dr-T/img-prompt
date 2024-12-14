@@ -105,6 +105,7 @@ export function Navigation() {
             </Button>
           </Dropdown>
           <Switch checked={theme === "dark"} onChange={toggleTheme} checkedChildren={<MoonOutlined />} unCheckedChildren={<SunOutlined />} />
+          {/*
           {screens.md && (
             <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer">
               <img src={DISCORD_BADGE_SRC} alt="chat on Discord" style={{ height: "24px" }} />
@@ -119,6 +120,7 @@ export function Navigation() {
               }}
             />
           </a>
+          */}
         </Space>
       </Col>
     </Row>
