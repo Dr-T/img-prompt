@@ -4,9 +4,9 @@ import { CheckCircleOutlined } from "@ant-design/icons";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { CONSTANT_BUTTONS, NEGATIVE_TEXT, colorArray } from "@/app/data/constants";
-import { copyToClipboard } from "@/app/utils/copyToClipboard";
 import { translateText } from "@/app/utils/translateAPI";
 import { normalizeString } from "@/app/utils/normalizeString";
+import { useCopyToClipboard } from "@/app/hooks/useCopyToClipboard";
 import { TagItem } from "./types";
 
 const { Paragraph, Text } = Typography;
@@ -21,6 +21,7 @@ const getRandomColor = () => colorArray[Math.floor(Math.random() * colorArray.le
 
 const ResultSection: FC<ResultSectionProps> = ({ selectedTags = [], setSelectedTags, tagsData }) => {
   const [messageApi, contextHolder] = message.useMessage();
+  const { copyToClipboard } = useCopyToClipboard();
   const t = useTranslations("ResultSection");
   const [resultText, setResultText] = useState("");
   const [suggestedTags, setSuggestedTags] = useState<TagItem[]>([]);
@@ -122,6 +123,8 @@ const ResultSection: FC<ResultSectionProps> = ({ selectedTags = [], setSelectedT
         .filter(Boolean)
         .join(", ");
       setResultText(newText);
+    } else if (selectedTags.length === 0) {
+      setResultText("");
     }
   }, [selectedTags, isComposing]);
 
@@ -172,7 +175,7 @@ const ResultSection: FC<ResultSectionProps> = ({ selectedTags = [], setSelectedT
 
   // functions
   const handleConstantText = useCallback(
-    (constantText: string) => {
+    (constantText: string, successMessageKey: string) => {
       const newText = resultText ? resultText + ", " + constantText : constantText;
       const displayNames = newText.split(", ").filter(Boolean);
       const uniqueDisplayNames = Array.from(new Set(displayNames));
@@ -189,10 +192,7 @@ const ResultSection: FC<ResultSectionProps> = ({ selectedTags = [], setSelectedT
 
       setSelectedTags(newSelectedTags);
       setResultText(uniqueDisplayNames.join(", "));
-      messageApi.open({
-        type: "success",
-        content: t("insertSuccess"),
-      });
+      messageApi.success(t(successMessageKey));
     },
     [resultText, findTagData, setSelectedTags, t]
   );
@@ -210,12 +210,8 @@ const ResultSection: FC<ResultSectionProps> = ({ selectedTags = [], setSelectedT
     try {
       const translatedText = await translateText(inputText, "auto", "en");
       if (translatedText.trim()) {
-        handleConstantText(translatedText);
+        handleConstantText(translatedText, "translateSuccess");
         setInputText("");
-        messageApi.open({
-          type: "success",
-          content: t("translateSuccess"),
-        });
       } else {
         messageApi.open({
           type: "error",
@@ -259,17 +255,17 @@ const ResultSection: FC<ResultSectionProps> = ({ selectedTags = [], setSelectedT
       <Space wrap>
         {CONSTANT_BUTTONS.map(({ text, type, tooltipKey, promptKey }) => (
           <Tooltip key={tooltipKey} title={t(tooltipKey)}>
-            <Button type={type as "primary"} onClick={() => handleConstantText(text)}>
+            <Button type={type as "primary"} onClick={() => handleConstantText(text, "insertSuccess")}>
               {t(promptKey)}
             </Button>
           </Tooltip>
         ))}
         <Tooltip title={t("tooltip-negative")}>
-          <Button type="dashed" onClick={() => copyToClipboard(NEGATIVE_TEXT, messageApi, t("copySuccess"), t("manualCopy"))}>
+          <Button type="dashed" onClick={() => copyToClipboard(NEGATIVE_TEXT, messageApi, t("prompt-negative"))}>
             {t("prompt-negative")}
           </Button>
         </Tooltip>
-        <Button onClick={() => copyToClipboard(resultText, messageApi, t("copySuccess"), t("manualCopy"))}>{t("button-copy")}</Button>
+        <Button onClick={() => copyToClipboard(resultText, messageApi, t("prompt"))}>{t("button-copy")}</Button>
         <Button danger onClick={handleClear}>
           {t("button-clear")}
         </Button>
@@ -312,12 +308,15 @@ const ResultSection: FC<ResultSectionProps> = ({ selectedTags = [], setSelectedT
           );
         })}
       </Flex>
-      <Space.Compact className="w-full mt-2">
-        <Input value={inputText} onChange={(e) => setInputText(e.target.value)} onPressEnter={handleTranslate} placeholder={t("placeholder-translate")} />
-        <Button type="primary" onClick={handleTranslate}>
-          {t("button-translate")}
-        </Button>
-      </Space.Compact>
+
+      <Tooltip title={t("tooltip-translate")}>
+        <Space.Compact className="w-full mt-2">
+          <Input value={inputText} onChange={(e) => setInputText(e.target.value)} onPressEnter={handleTranslate} placeholder={t("tooltip-translate")} />
+          <Button type="primary" onClick={handleTranslate}>
+            {t("button-translate")}
+          </Button>
+        </Space.Compact>
+      </Tooltip>
       <Paragraph type="secondary" className="mt-2">
         {t("title-other")}
       </Paragraph>
